@@ -1,0 +1,32 @@
+﻿@model WebApp.Models.IndexModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Top 20</h2>
+
+@if (String.IsNullOrEmpty(Model.errorMessage))
+{
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Vote Average</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        @foreach (WebApp.Models.MovieInfo item in Model.movieList)
+        {
+            <tr>
+                <td>@item.title</td>
+                <td>@item.voteAverage</td>
+                <td>@Html.ActionLink("link", "Index", new { controller = "Movie", movieId = item.id })</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+<p>@Model.errorMessage</p>
+}

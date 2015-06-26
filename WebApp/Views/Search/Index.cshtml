@@ -1,0 +1,44 @@
+﻿@model WebApp.Models.Search
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>
+    @using (Html.BeginForm())
+    {
+        <p>
+            Popularity: @Html.EditorFor(m => Model.voteAverageSearch) Genre: @Html.EditorFor(m => Model.genreSearch)
+            <button type="submit" class="btn btn-default">Submit</button>
+        </p>     
+        
+    }
+
+</p>
+@if (String.IsNullOrEmpty(Model.errorMessage))
+{
+    if (Model.searchResult.Count != 0)
+    {
+        <table class="table table-hover ">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Vote Average</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            @foreach (WebApp.Models.MovieInfo item in Model.searchResult)
+            {
+                <tr>
+                    <td>@item.title</td>
+                    <td>@item.voteAverage</td>
+                    <td>@Html.ActionLink("link", "Index", new { controller = "Movie", movieId = item.id })</td>
+                </tr>
+            }
+        </table>
+    }
+}
+else
+{
+    <p>@Model.errorMessage</p>
+}

@@ -1,0 +1,34 @@
+﻿@model WebApp.Models.Movie
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@if (String.IsNullOrEmpty(Model.errorMessage))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Vote Average</th>
+                <th>Genres</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>@Model.movieInfo.title</td>
+            <td>@Model.movieInfo.voteAverage</td>
+            <td>
+                @foreach (string item in Model.genreList)
+                {
+                    @item <br />
+                }
+            </td>
+            <td>@Model.plot</td>
+        </tr>
+    </table>
+}
+else
+{
+    <p>@Model.errorMessage</p>
+}

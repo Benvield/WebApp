@@ -1,0 +1,10 @@
+﻿@model List<WebApp.Models.Genre>
+
+@{    var topGenrePieChart = new Chart(width: 900, height: 800, theme: ChartTheme.Blue)
+        .AddTitle("Genre distribution")
+        .AddSeries("Default", chartType: "Pie",
+            xValue: Model, xField: "name",
+            yValues: Model, yFields: "popularity")
+        .AddLegend("Description", null)
+        .Write();
+}

@@ -1,0 +1,19 @@
+﻿@model WebApp.Models.TopGenre
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (String.IsNullOrEmpty(Model.errorMessage))
+{ 
+      var topGenrePieChart = new Chart(width: 900, height: 800, theme: ChartTheme.Blue)
+        .AddTitle("Genre distribution")
+        .AddSeries("Default", chartType: "Pie",
+            xValue: Model.genreList, xField: "name",
+            yValues: Model.genreList, yFields: "popularity")
+        .AddLegend("Description", null)
+        .Write();
+} else
+{
+    <p>@Model.errorMessage</p>
+}
