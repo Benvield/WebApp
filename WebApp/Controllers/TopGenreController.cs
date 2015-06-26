@@ -37,6 +37,7 @@ namespace WebApp.Controllers
             {
                 try
                 {
+                    List<Genre> genreList = new List<Genre>();
                     NpgsqlCommand command = new NpgsqlCommand("SELECT g.name,Count(mg.movie_id) FROM movie_genre AS mg, genre AS g WHERE mg.genre_id = g.id GROUP BY g.name ORDER BY g.name;", connection);
                     NpgsqlDataReader dataReader = command.ExecuteReader();
                     while (dataReader.Read())
@@ -47,8 +48,9 @@ namespace WebApp.Controllers
                             popularity = (long)dataReader[1],
                         };
 
-                        genreModel.genreList.Add(newGenre);
-                    }                    
+                        genreList.Add(newGenre);
+                    }
+                    TempData["genreList"] = genreList;
                 }
                 finally
                 {
@@ -57,11 +59,16 @@ namespace WebApp.Controllers
             }
             return View(genreModel);
         }
-                
-        //public ActionResult MakeChart(List<Genre> genreList)
-        //{
-        //    return View(genreList);
-        //}
+
+        public ActionResult MakeChart()
+        {
+            List<Genre> genreList = new List<Genre>();
+            if(TempData["genreList"] != null)
+            {
+                genreList = (List<Genre>)TempData["genreList"];
+            }
+            return View(genreList);
+        }
 
     }
 }
